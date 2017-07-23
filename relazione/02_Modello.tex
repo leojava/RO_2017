@@ -1,0 +1,60 @@
+
+
+  %descrizione modello + spiegazione (vincoli etc)
+
+	\section{Modello (matematico)}
+
+
+\begin{align*}	% l'asterisco toglie il numero alle righe (: equazioni)
+minimize \ \ D \\	% & per allineare
+%
+0 \leq X_i           \ \ \ \ \   &\forall{ i \in I} \\
+X_i +W_i \leq D      \ \ \ \ \   &\forall{ i \in I} \\
+0 \leq Y_i           \ \ \ \ \   &\forall{ i \in I} \\
+Y_i +H_i \leq D      \ \ \ \ \   &\forall{ i \in I} \\ \\
+%
+%
+Cx_{i,j} = X_i - (X_j + W_j)       \ \ \ \ \   &\forall{ i \in I, j \in J: i \neq j} \\
+Cy_{i,j} = Y_i - (Y_j + H_j)       \ \ \ \ \   &\forall{ i \in I, j \in J: i \neq j} \\ \\
+%
+%
+Cx_{i,j} \leq M *befX_{i,j} -1           \ \ \ \ \   &\forall{ i \in I, j \in J: i \neq j} \\
+Cx_{i,j} \geq 0 + M*(1-befX_{i,j})       \ \ \ \ \   &\forall{ i \in I, j \in J: i \neq j} \\ \\
+%
+%
+Cy_{i,j} \leq M *befY_{i,j} -1           \ \ \ \ \   &\forall{ i \in I, j \in J: i \neq j} \\
+Cy_{i,j} \geq 0 + M*(1-befY_{i,j})       \ \ \ \ \   &\forall{ i \in I, j \in J: i \neq j} \\ \\
+%
+%
+(1-befX_{i,j})+(1-befX_{j,i})+ \ \ \ \ & \\ (1-befY_{i,j})+(1-befY_{j,i}) \leq 3       \ \ \ \ \   &\forall{ i \in I, j \in J: i \neq j} \\ \\
+%
+%s.t. l1{i in I, j in I:i!=j}: (Cx[i,j]) <= bigM*befX[i,j]+-1                 ;			#problema con una unità?
+%s.t. l2{i in I, j in I:i!=j}: (Cx[i,j]) >= 0             -bigM*(1-befX[i,j]);		#problema con una unità?
+%
+%
+\\
+X_i \in \NaturalSet      \ \ \ \ &\forall{i \in I} \\
+Y_i \in \NaturalSet      \ \ \ \ &\forall{i \in I} \\
+Cx_{i,j} \in \IntegerSet \ \ \ \ &\forall{i \in I,j \in I} \\
+Cy_{i,j} \in \IntegerSet \ \ \ \ &\forall{i \in I,j \in I} \\
+BefX{i,j} \in \BinSet    \ \ \ \ &\forall{i \in I,j \in I} \\
+BefY{i,j} \in \BinSet    \ \ \ \ &\forall{i \in I,j \in I} 
+%
+ \end{align*}
+
+
+
+		\subsection{Variabili Decisionali}
+
+		Bef{x,y}
+		\subsection{Parametri}
+		W
+		H
+		useBleding
+		usePowTwo
+		useRotation
+		\subsection{Vincoli e funzione obiettivo}
+		min D
+
+		Cx Cy
+		\newpage

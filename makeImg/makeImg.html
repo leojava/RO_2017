@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="it">
+    <head>
+        <meta charset="UTF-8">
+        <script src="makeImg.js"></script>
+    </head>
+    <body>
+    <style>
+    div{
+    border: red solid 1px;
+    min-height: 10px;
+    min-width: 10px;
+    }
+    </style>
+    <div>
+		<textarea id="t" onchange="doCose()" >512
+1,1,100,100
+400,50,60,60</textarea>
+		<input type="button" onclick="doCose()" value="update!" >
+    </div>
+    <div>
+    	<canvas id="c" >
+    </div>
+<!--    <div>
+	    <img id="i">
+    </div>-->
+    </body>
+</html>

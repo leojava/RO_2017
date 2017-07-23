@@ -1,0 +1,56 @@
+##///MOD
+
+set I:= a b c d e f;
+
+param W:=	#chiave valore
+ a 3
+ b 2
+ c 2
+ d 1
+ e 2
+ f 1;
+
+param H:=
+ a 3
+ b 2
+ c 2
+ d 1
+ e 2
+ f 4;
+/**/
+
+param bigM := 1000000;
+
+
+set P:=0 1 2 3 4 5 6 7 8 9 10 11 12 13;
+param pow2:=
+ 0     1
+ 1     2
+ 2     4
+ 3     8
+ 4    16
+ 5    32
+ 6    64
+ 7   128
+ 8   256
+ 9   512
+10  1024
+11  2048
+12  4096
+13  8192
+14 16384;
+param usePowOfTwo = 1;
+
+
+
+/*
+var p >= 0;
+maximize func : 1500*p;
+
+subject to  max_a:  p <= 300;
+s.t.        min_a:  p >= 15;
+
+solve;
+display p;
+*/
+##\\\MOD

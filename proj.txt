@@ -1,0 +1,21 @@
+problema:
+prob iniziale : min D, t.c. nell'img D*D ci stiano tutte le img quadrate in elenco
+
+rilassamenti:
+	no rettangoli
+	no rotazioni
+	no bleeding
+	no pow2 (pere mipmap)
+
+	img:D
+
+o:x,y, w,h
+
+vincoli principali:
+	1.	Gli obj sono posizionati in D*D (per x e y)
+			( (0<=x ^ x+w<D) ^ (0<=y ^ y+h<D ) )
+
+	2.	Gli obj NON si sovrappongono (a coppie)
+		2.1.	fE a,b :a!=b : a prima di b OPPURE b prima di a (xor)
+					( (a.(x+w)<b.x OPPURE b.(x+w)<a.x) ^ (a.(y+h)<b.y OPPURE b.(y+h)<a.h) )
+

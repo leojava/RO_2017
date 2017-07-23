@@ -1,0 +1,80 @@
+
+##\\\RUN
+
+reset;
+model proj_01.mod;
+data projDati_01.dat;
+
+option solver cplex;
+option Cautions 0;
+option presolve 0;
+
+#option display_transpose -5;
+
+#write projSol;
+solve; #
+# display p;  #v1, v2, ...
+
+display D;
+
+#display I;
+display X, Y, W, H;
+
+#display befX;#, befY;
+
+
+
+printf "Cx, Cy:\n  ";
+for{i in I}{
+	printf "|    %c    ", i;
+}
+printf "\n";
+for{i in I}{
+	printf "%c ", i;
+	for{j in I}{
+		#print C[i,j];
+		printf "|%4d %4d", Cx[i,j], Cy[i,j];
+	}
+	printf "\n";
+}
+printf "\n";
+
+printf "befX, befY:\n  ";
+for{i in I}{
+	printf "| %c ", i;
+}
+printf "\n";
+for{i in I}{
+	printf "%c ", i;
+	for{j in I}{
+		#print C[i,j];
+		printf "|%d %d", befX[i,j], befY[i,j];
+	}
+	printf "\n";
+}
+
+#var foo >=5,<=5;
+#param out symbolic =  'a' & 'very' & 'long' & 'string' & 123 & sprintf('%5d', foo);
+
+param out symbolic =  'soluz.txt';
+
+printf "" > (out);
+printf "%d\n",D >> (out);
+for{i in I}
+	printf '%d,%d,%d,%d\n',X[i],Y[i],W[i],H[i] >> (out);
+
+
+
+
+##///RUN
+
+/*
+cd /home/leonardo/Documenti/ROproj;
+cd ROproj;
+include proj_01.run;
+*/
+
+
+
+
+# include ampl.run;
