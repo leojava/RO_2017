@@ -2,12 +2,12 @@
 ##\\\RUN
 
 reset;
-model proj_01.mod;
-data projDati_01.dat;
+model atlas.mod;
+data atlas_02.dat;
 
 option solver cplex;
-option Cautions 0;
-option presolve 0;
+#option Cautions 0;
+#option presolve 0;
 
 #option display_transpose -5;
 
@@ -61,7 +61,7 @@ param out symbolic =  'soluz.txt';
 printf "" > (out);
 printf "%d\n",D >> (out);
 for{i in I}
-	printf '%d,%d,%d,%d\n',X[i],Y[i],W[i],H[i] >> (out);
+	printf '%d,%d,%d,%d,%d\n',X[i],Y[i],W[i],H[i],r[i] >> (out);
 
 /*	r[i]
  e le opzioni
