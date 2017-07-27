@@ -8,8 +8,8 @@ param bigM;						# valore grande a piacere
 var D >= 0, <= 2048 integer;	# dimensione del lato dell'immagine
 var X{I} >=0 integer;			# x
 var Y{I} >=0 integer;			# y
-var Cx{I,I} integer;			# può andare -bigM a +bigM
-var Cy{I,I} integer;			# può andare -bigM a +bigM
+/*var Cx{I,I} integer;			# può andare -bigM a +bigM
+var Cy{I,I} integer;			# può andare -bigM a +bigM*/
 var beforeX{I,I} binary;		# {1 se Xi+Wi prima di Xj, 0 altrimenti}
 var beforeY{I,I} binary;		# {1 se Yi+Hi prima di Yj, 0 altrimenti}
 /*  per ogni i,j : (befX[i,j], befX[j,i]) = 
@@ -23,8 +23,8 @@ var beforeY{I,I} binary;		# {1 se Yi+Hi prima di Yj, 0 altrimenti}
 
 param allowRotations binary default 0;	# permettere scambio H,W ?
 var r{I} binary;						# l'img i è ruotata? (swap tra W e H)
-var _W{I} >=0 integer;
-var _H{I} >=0 integer;
+/*var _W{I} >=0 integer;
+var _H{I} >=0 integer;*/
 
 
 
@@ -48,28 +48,33 @@ minimize minimizzaLato : D;
 subject to minimaX{i in I}: X[i]+W[i] <= D;
 subject to minimaY{i in I}: Y[i]+H[i] <= D;
 
-s.t. cx1{i in I, j in I:i!=j}: Cx[i,j] = X[i]- (X[j]+W[j]);
-s.t. cy1{i in I, j in I:i!=j}: Cy[i,j] = Y[i]- (Y[j]+H[j]);
+/* s.t. cx1{i in I, j in I:i!=j}: Cx[i,j] = X[i]- (X[j]+W[j]);
+   s.t. cy1{i in I, j in I:i!=j}: Cy[i,j] = Y[i]- (Y[j]+H[j]); */
 
-s.t. beforeXU{i in I, j in I:i!=j}: (Cx[i,j]) <= bigM*beforeX[i,j]-1                 ;
-s.t. beforeXL{i in I, j in I:i!=j}: (Cx[i,j]) >= 0             -bigM*(1-beforeX[i,j]);
+# era: Cx[i,j] : Cx[i,j] = X[i]- (X[j]+W[j])
+s.t. beforeXU{i in I, j in I:i!=j}: (X[i]- (X[j]+W[j])) <= bigM*beforeX[i,j]-1                    ;
+s.t. beforeXL{i in I, j in I:i!=j}: (X[i]- (X[j]+W[j])) >= 0                -bigM*(1-beforeX[i,j]);
 
-s.t. beforeYU{i in I, j in I:i!=j}: (Cy[i,j]) <= bigM*beforeY[i,j]-1                 ;
-s.t. beforeYL{i in I, j in I:i!=j}: (Cy[i,j]) >= 0             -bigM*(1-beforeY[i,j]);
+# era: Cy[i,j] : Cy[i,j] = Y[i]- (Y[j]+H[j])
+s.t. beforeYU{i in I, j in I:i!=j}: (Y[i]- (Y[j]+H[j])) <= bigM*beforeY[i,j]-1                    ;
+s.t. beforeYL{i in I, j in I:i!=j}: (Y[i]- (Y[j]+H[j])) >= 0                -bigM*(1-beforeY[i,j]);
 # non possono esserci sia intersezioni su X che Y
 s.t. noIntersezioni{i in I, j in I:i!=j}: (1-beforeX[i,j])+(1-beforeX[j,i])+(1-beforeY[i,j])+(1-beforeY[j,i]) <= 3;
 
 
 # rotazioni
 s.t. rotazione{i in I}: r[i]<=allowRotations; # no rotation => fized rotation
-s.t. lunghezza{i in I}: _W[i] = width[i]*(1-r[i])+height[i]*r[i];
-s.t. altezza{i in I}: _H[i] = height[i]*(1-r[i])+width[i]*r[i];
+
+/*s.t. lunghezza{i in I}: _W[i] = width[i]*(1-r[i])+height[i]*r[i];
+  s.t. altezza{i in I}: _H[i] = height[i]*(1-r[i])+width[i]*r[i]; */
+s.t. lunghezza{i in I}: W[i] = (width[i]*(1-r[i])+height[i]*r[i])+(2*useNoBleeding);
+s.t. altezza{i in I}:   H[i] = (height[i]*(1-r[i])+width[i]*r[i])+(2*useNoBleeding);
 
 
 #si fanno prima rotazioni che bleeding perché _W*r è NON lineare
 #bleeding
-s.t. bleed1{i in I}: W[i]=_W[i]+2*useNoBleeding;;
-s.t. bleed2{i in I}: H[i]=_H[i]+2*useNoBleeding;;
+/*s.t. bleed1{i in I}: W[i]=_W[i]+2*useNoBleeding;
+s.t. bleed2{i in I}: H[i]=_H[i]+2*useNoBleeding;*/
 
 
 #D in pow2

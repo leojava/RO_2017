@@ -1,9 +1,14 @@
 
 ##\\\RUN
 
+param num="01";
+param dataFile symbolic = '' & sprintf('atlas_%s.dat', num);		#symbolic
+param solutionsFile symbolic = '' & sprintf('sol_%s.txt', num);		#symbolic
+
 reset;
 model atlas.mod;
 data atlas_02.dat;
+#data (dataFile);
 
 option solver cplex;
 #option Cautions 0;
@@ -57,8 +62,9 @@ for{i in I}{
 #param out symbolic =  'a' & 'very' & 'long' & 'string' & 123 & sprintf('%5d', foo);
 
 param out symbolic =  'soluz.txt';
+#param out symbolic = (solutionsFile);
 
-printf "" > (out);
+#printf "" > (out);
 printf "%d\n",D >> (out);
 for{i in I}
 	printf '%d,%d,%d,%d,%d\n',X[i],Y[i],W[i],H[i],r[i] >> (out);
