@@ -1,24 +1,28 @@
 ##\\\DAT
 
-set I:= a b c d e f;
+set I:= a b c d e f g h;
 
 param width:=	#chiave valore
  a 16
- b 8
+ b 32
  c 8
  d 5
- e 72
- f 32;
+ e 32
+ f 168
+ g 96
+ h 96;
 
 param height:=
- a 16
- b 16
+ a 32
+ b 32
  c 8
- d 25
- e 22
- f 32;
+ d 15
+ e 64
+ f 32
+ g 128
+ h 96;
 
-param bigM := 1000000;
+param bigM := 100000000;
 
 param allowRotations = 1;
 param useNoBleeding = 1;

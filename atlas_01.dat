@@ -3,27 +3,27 @@
 set I:= a b c d e f;
 
 param width:=	#chiave valore
- a 3
- b 2
- c 2
- d 1
- e 2
- f 1;
+ a 16
+ b 8
+ c 8
+ d 5
+ e 72
+ f 32;
 
 param height:=
- a 3
- b 2
- c 2
- d 1
- e 2
- f 4;
-/**/
+ a 16
+ b 16
+ c 8
+ d 25
+ e 22
+ f 32;
 
 param bigM := 1000000;
 
 
+param usePowerOfTwo = 1;
 set P:=0 1 2 3 4 5 6 7 8 9 10 11 12 13 14;
-param pow2:=
+param powersOf2:=
  0     1
  1     2
  2     4
@@ -39,6 +39,5 @@ param pow2:=
 12  4096
 13  8192
 14 16384;
-param usePowerOfTwo = 1;
 
 ##///DAT

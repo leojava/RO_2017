@@ -3,9 +3,11 @@
 
 reset;
 
-param num := 1;
-param dataFile symbolic := '' & sprintf('atlas_0%d.dat', num);		#symbolic
-param solutionsFile symbolic := '' & sprintf('soluz_0%d.txt', num);	#symbolic
+
+
+param num := 6;
+param dataFile symbolic := '' & sprintf('atlas_0%d.dat', num);
+param solutionsFile symbolic := '' & sprintf('soluz_0%d.txt', num);
 
 model atlas.mod;
 data (dataFile);	#atlas_02.dat;
@@ -35,13 +37,13 @@ for{i in I}{
 
 printf "" > (solutionsFile);	#serve per eliminare il vecchio contenuto
 printf "%d,%d\n",D,useNoBleeding >> (solutionsFile);
-for{i in I}
+for{i in I}{
 	printf '%d,%d,%d,%d,%d\n',X[i],Y[i],W[i],H[i],r[i] >> (solutionsFile);
-
-
-##///RUN
+}
 
 /*
 cd ROproj;
 include atlas.run;
 */
+
+##///RUN
