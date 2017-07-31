@@ -1,50 +1,26 @@
 
 ##\\\RUN
 
-param num="01";
-param dataFile symbolic = '' & sprintf('atlas_%s.dat', num);		#symbolic
-param solutionsFile symbolic = '' & sprintf('sol_%s.txt', num);		#symbolic
-
 reset;
+
+param num := 1;
+param dataFile symbolic := '' & sprintf('atlas_0%d.dat', num);		#symbolic
+param solutionsFile symbolic := '' & sprintf('soluz_0%d.txt', num);	#symbolic
+
 model atlas.mod;
-data atlas_02.dat;
-#data (dataFile);
+data (dataFile);	#atlas_02.dat;
 
 option solver cplex;
 #option Cautions 0;
 #option presolve 0;
 
-#option display_transpose -5;
-
-#write projSol;
-solve; #
-# display p;  #v1, v2, ...
+solve;
 
 display D;
 
-#display I;
-# display X, Y, W, H;
-
-#display befX;#, befY;
-
 
 /*
-printf "Cx, Cy:\n  ";
-for{i in I}{
-	printf "|    %c    ", i;
-}
-printf "\n";
-for{i in I}{
-	printf "%c ", i;
-	for{j in I}{
-		#print C[i,j];
-		printf "|%4d %4d", Cx[i,j], Cy[i,j];
-	}
-	printf "\n";
-}
-printf "\n";
-
-printf "befX, befY:\n  ";
+printf "beforeX, beforeY:\n  ";
 for{i in I}{
 	printf "| %c ", i;
 }
@@ -52,39 +28,20 @@ printf "\n";
 for{i in I}{
 	printf "%c ", i;
 	for{j in I}{
-		#print C[i,j];
-		printf "|%d %d", befX[i,j], befY[i,j];
+		printf "|%d %d", beforeX[i,j], beforeY[i,j];
 	}
 	printf "\n";
-}*/
+}/**/
 
-#var foo >=5,<=5;
-#param out symbolic =  'a' & 'very' & 'long' & 'string' & 123 & sprintf('%5d', foo);
-
-param out symbolic =  'soluz.txt';
-#param out symbolic = (solutionsFile);
-
-#printf "" > (out);
-printf "%d\n",D >> (out);
+printf "" > (solutionsFile);	#serve per eliminare il vecchio contenuto
+printf "%d,%d\n",D,useNoBleeding >> (solutionsFile);
 for{i in I}
-	printf '%d,%d,%d,%d,%d\n',X[i],Y[i],W[i],H[i],r[i] >> (out);
-
-/*	r[i]
- e le opzioni
-*/
-
-
+	printf '%d,%d,%d,%d,%d\n',X[i],Y[i],W[i],H[i],r[i] >> (solutionsFile);
 
 
 ##///RUN
 
 /*
-cd /home/leonardo/Documenti/ROproj;
 cd ROproj;
-include proj_01.run;
+include atlas.run;
 */
-
-
-
-
-# include ampl.run;

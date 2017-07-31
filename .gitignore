@@ -1,8 +1,10 @@
 *ampl*
 *.aux
 *.log
+*.out
 *.toc
 *.synctex.gz
 *.pdf
 *.lof
-
+*.old
+soluz*.txt
