@@ -5,25 +5,30 @@
         <script src="makeImg.js"></script>
     </head>
     <body>
-    <style>
-    div{
+   		<style>
+div{
     border: red solid 1px;
     min-height: 10px;
     min-width: 10px;
-    }
-    </style>
-    <div>
-		<textarea id="t" onchange="doCose()" >512
+}
+    	</style>
+	    <div>
+			<textarea id="t" onchange="doCose()" >512,1
 1,1,100,100
 400,50,60,60</textarea>
-		<input type="button" onclick="doCose()" value="update!" >
-        <input type="checkbox" id="trasparenze" ><label for="trasparenze">Trasparenze</label>
-    </div>
-    <div>
-    	<canvas id="c" >
-    </div>
-<!--    <div>
-	    <img id="i">
-    </div>-->
+			<input type="button" onclick="doCose()" value="update!" >
+	        <input type="checkbox" id="trasparenze" ><label for="trasparenze">Trasparenze</label>
+	        <input type="checkbox" id="SVG" ><label for="SVG">SVG</label>
+	    </div>
+	    <div>
+	    	<canvas id="c" >
+	    </div>
+	    <!--<div>
+	    	<svg id="s">
+	    	</svg>
+	    </div>
+	    <div>
+	    	<img id="i"/>
+	    </div>-->
     </body>
 </html>
