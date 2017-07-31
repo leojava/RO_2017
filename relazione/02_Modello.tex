@@ -2,11 +2,11 @@
 
   %descrizione modello + spiegazione (vincoli etc)
 
-	\section{Modello (matematico)}
+	\section{Modello matematico}
 
 
 \begin{align*}	% l'asterisco toglie il numero alle righe (: equazioni)
-minimize \ \ D \\	% & per allineare
+minimize \ \ D       \ \ \ \ \   & \\	% & per allineare
 %
 0 \leq X_i           \ \ \ \ \   &\forall{ i \in I} \\
 X_i +W_i \leq D      \ \ \ \ \   &\forall{ i \in I} \\
@@ -43,7 +43,7 @@ BefY{i,j} \in \BinSet    \ \ \ \ &\forall{i \in I,j \in I}
  \end{align*}
 
 
-
+\iffalse
 		\subsection{Variabili Decisionali}
 
 		Bef{x,y}
@@ -58,3 +58,186 @@ BefY{i,j} \in \BinSet    \ \ \ \ &\forall{i \in I,j \in I}
 
 		Cx Cy
 		\newpage
+\fi
+
+
+
+\iffalse
+Changelog del modello
+
+
+Il modello è passato per più fasi incrementali:
+* La prima versione risolve il problema base
+* Quindi è stato aggiunto il supporto per il bleeding
+* La terza versione ha aggiunto la possibilità di ruotare le immagini
+* La quarta e ultima versione permette di fissare la dimensione della texture atlas a potenze di 2
+\fi
+
+
+
+
+
+\subsection{Insiemi}
+\subsubsection{I}
+I è l'insieme delle immagini da posizionare nel texture atlas.
+
+\subsubsection{P}
+P è l'insieme delle potenze di 2;
+
+
+\renewcommand{\Xi}{X\textsubscript{i}}
+\newcommand{\Yi}{Y\textsubscript{i}}
+\newcommand{\Wi}{W\textsubscript{i}}
+\newcommand{\Hi}{H\textsubscript{i}}
+\newcommand{\beforeXij}{beforeX\textsubscript{i,j}}
+\newcommand{\beforeYij}{beforeY\textsubscript{i,j}}
+\newcommand{\ri}{r\textsubscript{i}}
+
+\newcommand{\isTp}{is2\textsubscript{p}}
+
+\subsection{Variabili Decisionali}
+
+\subsubsection{D}
+D è la variabile intera positiva che indica la dimensione del texture Atlas
+
+\subsubsection{X e Y}
+\Xi{} e \Yi{} sono le variabili intere non negative che definiscono la posizione dell'immagine i all'interno del texture atlas.
+
+\subsubsection{W e H}
+\Wi{} e \Hi{} sono le variabili intere positive che indicano rispettivamente la larghezza e l'altezza finali occupate dall'immagine i.
+
+
+\subsubsection{BeforeX e BeforeY}
+
+{\beforeXij} è la variabile binaria che indica se, sull'asse delle ascisse, l'immagine i finisce prima che l'immagine j inizi 
+%(in caso di verità: true)
+. Se sia \beforeXij{} che beforeX\textsubscript{j,i} sono a 1  allora le proiezioni sulle ascisse delle texture i e j si sovrappongono. \\
+{\beforeYij} è lo stesso tipo di variabile, ma per l'asse delle ordinate.
+
+\iffalse
+/*
+BeforeY
+ Questo vincolo esiste sia per l'asse x che per l'asse y e si ripete per ogni coppia ordinata di texture. 
+*/
+\fi
+
+\subsubsection{r}
+
+{\ri} è la variabile binaria che indica se l'immagine i è ruotata di 90\degree\ (\ri{}=1) o non ruotata (\ri{}=0)
+
+\subsubsection{is2}
+\isTp{} variabile binaria che indica se D è uguale a una specifica potenza di 2.
+
+
+
+
+
+
+
+\newcommand{\widthi}{width\textsubscript{i}}
+\newcommand{\heighti}{height\textsubscript{i}}
+
+
+\newcommand{\footBleeding}{L'effetto bleeding si può manifestare nei programmi che sfruttano l'accelerazione hardware. In essi i pixel vengono presi con delle coordinate reali in [0,1] e i pixel subito fuori dall'immagine possono "sporcare" quelli di contorno. Perciò si ricopiano questi ultimi in un bordo di 1 pixel attorno a tutta l'immagine.}
+\newcommand{\footRotation}{Spiegare differenza opengl et sim. Verso solo sw.}
+\newcommand{\footTwoPowers}{Alcune librerie spesso esigono immagini quadrate il cui lato dev'essere una potenze di 2.}
+
+
+
+\subsection{Parametri}
+
+\subsubsection{width e height}
+
+\widthi{} e \heighti{} sono i parametri naturali che indicano le dimensioni originali delle texture.
+
+\subsubsection{bigM}
+bigM è un parametro naturale grande a piacere, di default a 100’000’000. Indica l'infinito.
+
+\subsubsection{useNoBleeding}
+useNoBleeding è un parametro binario, di default a 0, che indica se tenere conto dell'effetto bleeding\footnote{\footBleeding} nelle texture atlas. 
+
+\subsubsection{allowRotation}
+allowRotation è un parametro binario, di default a 0, che indica se permettere che le immagini vengano posizionate ruotate\footnote{\footRotation} di 90\degree.%.rotazioni alle texture (ovvero se scambiare w e h).
+
+
+
+\subsubsection{usePowerOfTwo}
+usePowerOfTwo è un parametro binario, di default a 0, che indica se limitare i possibili valori di D alle sole potenze di 2\footnote{\footTwoPowers}.
+
+\subsubsection{powersOf2}
+powersOf2 : set di potenze di 2. Serve perché altrimenti servirebbe un vincolo non lineare su D per limitarne i valori alle sole potenze di 2. \\
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{funzione obiettivo}
+minimizzaLato min D è la funzione obiettivo, dove si cerca di minimizzare D.
+
+
+
+
+\subsection{vincoli}
+
+\subsubsection{minimaX e minimaY}
+minimaX si assicura che per ogni immagine, D la possa contenere sulle ascisse. \\
+minimaY è lo stesso vincolo sulle ordinate.
+
+\subsubsection{beforeXU, beforeXL e beforeYU, beforeYL}
+beforeXU e beforeXL sono i vincoli che si assicurano che beforeX (i,j) abbia il corretto valore. Essi pongono un limite superiore e un limite inferiore all'espressione xi-xj-wj (=ci,j) e risultano in beforeX i,j=1 se ci,j appartiene a [0,bigM], beforeX i,j=0 se ci,j appartiene a [-bigM, -1].
+differenza tra l'inizio dell'immagine i e  la fine dell'immagine j.
+
+
+
+
+
+
+/*
+
+
+Cx variabile d'aiuto per befX; dicono quanto spazio c'è a “sinistra” tra l'inizio di i e la fine di j
+* >= 0 intersezione non possibile, 
+* <0 intersezione possibile
+Cy simile per befY
+*/
+
+
+
+
+beforeYU e beforeYL sono i corrispettivi vincoli per la variabile beforeY.
+
+
+\subsubsection{noIntersezioni}
+noIntersezioni si assicura che non ci siano intersezioni, ovvero sovrapposizioni sia sulle proiezioni sulle ascisse che sulle ordinate. Esso limita la somma di beforeX e beforeY per ogni coppia non ordinata di immagini (i,j) a 3, ovvero ci può essere al massimo una sovrapposizione su un asse tra ascisse e ma non su entrambe (ovvero un'intersezione).
+
+
+
+\subsubsection{rotazione}
+rotazione si assicura che le immagini possano ruotare solo se il relativo parametro allowRotations è impostato a 1.
+
+
+
+
+
+\subsubsection{larghezza e altezza}
+larghezza si assicura di tener conto del bleeding e della possibilità che le immagini possano essere ruotate
+altezza è un vincolo simile per l'altezza. \\
+
+
+\subsubsection{powersOf2U e powersOf2L}
+pU e pL sono vincoli che definiscono upper e lower bound per D
+
+\subsubsection{TwoPower}
+TwoPower si assicura che, in caso usePowerOfTwo sia impostato a 1, D sia una potenza di 2 tra quelle presenti in powersOf2 
+
+
+

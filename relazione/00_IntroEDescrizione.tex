@@ -1,0 +1,72 @@
+
+%	\maketitle
+\begin{center}
+	\hspace{0pt}
+	\vfill
+	\Huge{
+		\textbf{\thetitle} \\
+		\LARGE{\textbf{Progetto: texture atlas}} \\
+		\ \newline \newline \newline
+		\Large{	Studente: \textbf{\theauthor} } \\
+		\normalsize{{Matricola: \textbf{\matNum}} }
+	}
+	\vfill
+	\hspace{0pt}
+	%\vspace*{\fill}
+	%\pagebreak
+\end{center}
+\newpage
+
+\tableofcontents    
+\newpage
+
+
+\iffalse
+
+
+%\begin{center}
+%	\hspace{0pt}
+%	\vfill
+	\section{Abstract} 
+	\ \newline
+
+Il problema trattato è quello delle texture atlas, ovvero immagini di dimensioni notevoli utilizzate come raccoglitori di altre immagini, utili per accelerare l'accesso (spesso da parte della GPU) alle texture utilizzate. \\
+Si vuole trovare la minima dimensione D di un'immagine quadrata tale che in un immagine D x D sia possibile inserire tutte le texture date.
+	delle texture atlas
+
+%	\vfill
+%	\hspace{0pt}
+%\end{center}
+
+
+\newpage
+
+\fi
+
+
+
+
+  % descrizione + caratteristiche (?)
+
+	\section{Descrizione del problema}
+
+
+ 
+%Il problema in esame richiede di trovare la minima lunghezza D per cui un'immagine D*D contenga tutte le immagini facenti parte della texture atlas. \\
+%vincolo principale del problema è che D deve poter contenere tutte le immagini, quindi D dev'essere almeno uguale alla posizione+dimensione (W, H) di ogni immagine. \\
+%altro vincolo comporta la non sovraposizione per ogni coppia di immagini dell'insieme. \\
+
+Il problema trattato è quello delle texture atlas, ovvero immagini di dimensioni spesso notevoli utilizzate come raccoglitori di altre immagini, utili per accelerare l’accesso (soprattutto da parte della GPU) alle texture utilizzate. \\
+Si vuole trovare la minima lunghezza D tale che un’immagine quadrata di dimensioni DxD contenga tutte le texture comprese in un set dato. \\
+Il vincolo principale del problema è che D deve poter contenere tutte le immagini, quindi D dev’essere almeno uguale alla posizione+dimensione (in ascissa e ordinata) di ogni immagine. \\
+Il secondo vincolo principale comporta invece la non sovrapposizione di due texture. Questo vincolo è presente per ogni coppia di immagini diverse dell’insieme. \\
+\ \\
+Altri vincoli secondari riguardano la possibilità di permettere rotazioni delle texture, tener conto di un piccolo bordo per ogni immagine e limitare i valori assegnabili a D alle sole potenze di 2.
+
+
+
+
+
+
+
+	\newpage

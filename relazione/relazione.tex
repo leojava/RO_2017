@@ -10,21 +10,54 @@
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage[utf8]{inputenc}
-%\usepackage[T1]{fontenc}
+%\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
 \usepackage{graphicx}
+\usepackage{cmap}
 
+\usepackage{gensymb}
+
+\usepackage{color}
+\usepackage{hyperref}
+
+\usepackage{listings}
+
+
+
+%\DeclareUnicodeCharacter{00A0}{ }
+
+\title{Relazione RO per l'A.A. 2016/2017}
+\author{Leonardo Brutesco}
+
+\graphicspath{ {images/} }
+
+\hypersetup{
+	colorlinks=true,
+	linktoc=true,
+	linkcolor=blue,
+	linktocpage=true
+}
+	%hidelinks=true
+	%citecolor=black
+	%filecolor=black
+	%urlcolor=black
+\lstset{
+	basicstyle={Ubuntu mono}
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+	%basicstyle=\ttfamily,
 
 
 \newcommand{\RealSet}{\mathbb{R}}
 \newcommand{\BinSet}{\{0,1\}}
 \newcommand{\NaturalSet}{\mathbb{N}}
 \newcommand{\IntegerSet}{\mathbb{Z}}
-\graphicspath{ {images/} }
  
 
 
-\title{Relazione RO per l'A.A. 2016/2017}
-\author{Leonardo Brutesco}
 \newcommand{\matNum}{1097942}
 \newcommand{\matricola}{Mat: \matNum}
 
@@ -43,9 +76,10 @@
 \fancyhead[L]{\thetitle}
 \fancyhead[R]{\theauthor\ [\matricola]}
 \fancyfoot[R]{Pagina \thepage\ di \pageref{LastPage}}
+
 \begin{document}
 
-\input{00_Intro.tex}
+\input{00_IntroEDescrizione.tex}
 
 \input{01_Descrizione.tex}
 
@@ -53,7 +87,11 @@
 
 \input{03_AMPL.tex}
 
+\input{04_Esempi.tex}
 
+\input{05_OsservazioniEExtra.tex}
+
+\iffalse
   % risultati
 	\section{Risultati del problema}
 	\newpage
@@ -61,14 +99,12 @@
 	  %commenti
 	\section{Osservazioni}
 	\newpage
-
-
-\input{07_Esempi.tex}
+\fi
 	
 	\appendix
 %	\section{appendice?}
 
-\listoffigures
+% \listoffigures
 
 	\newpage
 \end{document}
