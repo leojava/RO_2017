@@ -1,70 +1,97 @@
 
 
+%%%%%%%%%%%%%%%%%%%%
+% MODELLO
+%%%%%%%%%%%%%%%%%%%%
+
   %descrizione modello + spiegazione (vincoli etc)
 
 	\section{Modello matematico}
 
+\newcommand{\fori}{\forall{ i \in I }}
+\newcommand{\forij}{\forall{ i,j \in I, i \neq j }}
+
+
+\renewcommand{\Xi}{X\textsubscript{i}}
+\newcommand{\Yi}{Y\textsubscript{i}}
+\newcommand{\Wi}{W\textsubscript{i}}
+\newcommand{\Hi}{H\textsubscript{i}}
+\newcommand{\beforeXij}{beforeX\textsubscript{i,j}}
+\newcommand{\beforeYij}{beforeY\textsubscript{i,j}}
+\newcommand{\ri}{r\textsubscript{i}}
+
+\newcommand{\isTp}{is2\textsubscript{p}}
+
+
+\newcommand{\widthi}{width\textsubscript{i}}
+\newcommand{\heighti}{height\textsubscript{i}}
+\newcommand{\powersOfTp}{powersOf2\textsubscript{p}}
+
+
 
 \begin{align*}	% l'asterisco toglie il numero alle righe (: equazioni)
-minimize \ \ D       \ \ \ \ \   & \\	% & per allineare
 %
-0 \leq X_i           \ \ \ \ \   &\forall{ i \in I} \\
-X_i +W_i \leq D      \ \ \ \ \   &\forall{ i \in I} \\
-0 \leq Y_i           \ \ \ \ \   &\forall{ i \in I} \\
-Y_i +H_i \leq D      \ \ \ \ \   &\forall{ i \in I} \\ \\
+%\newcommand{\eqn}[1]{\eqname{( #1 )}}
 %
+minimize \ \ D       \ \ \ \ \   &   & \eqname{(minimizzaLato)} \\	% & per allineare
 %
-Cx_{i,j} = X_i - (X_j + W_j)       \ \ \ \ \   &\forall{ i \in I, j \in J: i \neq j} \\
-Cy_{i,j} = Y_i - (Y_j + H_j)       \ \ \ \ \   &\forall{ i \in I, j \in J: i \neq j} \\ \\
-%
-%
-Cx_{i,j} \leq M *befX_{i,j} -1           \ \ \ \ \   &\forall{ i \in I, j \in J: i \neq j} \\
-Cx_{i,j} \geq 0 + M*(1-befX_{i,j})       \ \ \ \ \   &\forall{ i \in I, j \in J: i \neq j} \\ \\
+0 \leq X_i           \ \ \ \ \   & \fori{} \\
+X_i +W_i \leq D      \ \ \ \ \   & \fori{} & \eqname{(minimaX)} \\
+0 \leq Y_i           \ \ \ \ \   & \fori{} \\
+Y_i +H_i \leq D      \ \ \ \ \   & \fori{} & \eqname{(minimaY)} \\
+\\
 %
 %
-Cy_{i,j} \leq M *befY_{i,j} -1           \ \ \ \ \   &\forall{ i \in I, j \in J: i \neq j} \\
-Cy_{i,j} \geq 0 + M*(1-befY_{i,j})       \ \ \ \ \   &\forall{ i \in I, j \in J: i \neq j} \\ \\
+%Cx_{i,j} = X_i - (X_j + W_j)       \ \ \ \ \   &\forij{} \\
+%Cy_{i,j} = Y_i - (Y_j + H_j)       \ \ \ \ \   &\forij{} \\ \\
 %
 %
-(1-befX_{i,j})+(1-befX_{j,i})+ \ \ \ \ & \\ (1-befY_{i,j})+(1-befY_{j,i}) \leq 3       \ \ \ \ \   &\forall{ i \in I, j \in J: i \neq j} \\ \\
+%Cx_{i,j} \leq M *befX_{i,j} -1           \ \ \ \ \   &\forall{ i \in I, j \in J: i \neq j} \\
+%Cx_{i,j} \geq 0 + M*(1-befX_{i,j})       \ \ \ \ \   &\forall{ i \in I, j \in J: i \neq j} \\ \\
+X_i - (X_j + W_j) \leq M *befX_{i,j} -1           \ \ \ \ \   &\forij{} &\eqname{(beforeXU)} \\
+X_i - (X_j + W_j) \geq 0 + M*(1-befX_{i,j})       \ \ \ \ \   &\forij{} &\eqname{(beforeXL)} \\ \\
 %
-%s.t. l1{i in I, j in I:i!=j}: (Cx[i,j]) <= bigM*befX[i,j]+-1                 ;			#problema con una unità?
-%s.t. l2{i in I, j in I:i!=j}: (Cx[i,j]) >= 0             -bigM*(1-befX[i,j]);		#problema con una unità?
+%
+%Cy_{i,j} \leq M *befY_{i,j} -1           \ \ \ \ \   &\forall{ i \in I, j \in J: i \neq j} \\
+%Cy_{i,j} \geq 0 + M*(1-befY_{i,j})       \ \ \ \ \   &\forall{ i \in I, j \in J: i \neq j} \\ \\
+Y_i - (Y_j + H_j) \leq M *befY_{i,j} -1           \ \ \ \ \   &\forij{} &\eqname{(beforeYU)} \\
+Y_i - (Y_j + H_j) \geq 0 + M*(1-befY_{i,j})       \ \ \ \ \   &\forij{} &\eqname{(beforeYL)} \\ \\
+%
+%
+(1-beforeX_{i,j})+(1-beforeX_{j,i})+ \ \ \ \ & \\
+(1-beforeY_{i,j})+(1-beforeY_{j,i}) \leq 3       \ \ \ \ \   & \forij{} & \eqname{(noIntersezioni)} \\ \\
+%
+%
+r_i \leq \text{allowRotations} \ \ \ \ & \fori{} &\eqname{(rotazione)} \\
+%
+W_i = (\text{\widthi}*(1-r_i) + \text{\heighti}*r_i)+ \ \ \ \ & &\\
+(2*\text{useNoBleeding}) \ \ \ \ & \fori{} &\eqname{(larghezza)} \\
+%
+H_i = (\text{\heighti}*(1-r_i) + \text{\widthi}*r_i)+ \ \ \ \ & &\\
+(2*\text{useNoBleeding}) \ \ \ \ & \fori{} &\eqname{(altezza)} \\
+%\ \ \ \ &    &\eqname{()} \\
+%s.t. rotazione{i in I}: r[i]<=allowRotations; # no rotation => fized rotation
+%
+%s.t. larghezza{i in I}: W[i] = (width[i]*(1-r[i])+height[i]*r[i])+(2*useNoBleeding);
+%s.t. altezza{i in I}:   H[i] = (height[i]*(1-r[i])+width[i]*r[i])+(2*useNoBleeding);
 %
 %
 \\
-X_i \in \NaturalSet      \ \ \ \ &\forall{i \in I} \\
-Y_i \in \NaturalSet      \ \ \ \ &\forall{i \in I} \\
-Cx_{i,j} \in \IntegerSet \ \ \ \ &\forall{i \in I,j \in I} \\
-Cy_{i,j} \in \IntegerSet \ \ \ \ &\forall{i \in I,j \in I} \\
-BefX{i,j} \in \BinSet    \ \ \ \ &\forall{i \in I,j \in I} \\
-BefY{i,j} \in \BinSet    \ \ \ \ &\forall{i \in I,j \in I} 
+D \in \IntegerSet \ \ \ \ & & \\
+X_i, Y_i, W_i, H_i \in \IntegerSet      \ \ \ \ & \fori{} \\
+beforeX_{i,j}, beforeY_{i,j} \in \BinSet    \ \ \ \ & \forall{i \in I,j \in I} \\
+%
+r_i \in \BinSet \ \ \ \ & \fori{} \\
+%
+is2_p \in \BinSet \ \ \ \ & \forall{p \in P} \\
 %
  \end{align*}
 
-
-\iffalse
-		\subsection{Variabili Decisionali}
-
-		Bef{x,y}
-		\subsection{Parametri}
-		W
-		H
-		useBleding
-		usePowTwo
-		useRotation
-		\subsection{Vincoli e funzione obiettivo}
-		min D
-
-		Cx Cy
-		\newpage
-\fi
 
 
 
 \iffalse
 Changelog del modello
-
 
 Il modello è passato per più fasi incrementali:
 * La prima versione risolve il problema base
@@ -82,60 +109,11 @@ Il modello è passato per più fasi incrementali:
 I è l'insieme delle immagini da posizionare nel texture atlas.
 
 \subsubsection{P}
-P è l'insieme delle potenze di 2;
-
-
-\renewcommand{\Xi}{X\textsubscript{i}}
-\newcommand{\Yi}{Y\textsubscript{i}}
-\newcommand{\Wi}{W\textsubscript{i}}
-\newcommand{\Hi}{H\textsubscript{i}}
-\newcommand{\beforeXij}{beforeX\textsubscript{i,j}}
-\newcommand{\beforeYij}{beforeY\textsubscript{i,j}}
-\newcommand{\ri}{r\textsubscript{i}}
-
-\newcommand{\isTp}{is2\textsubscript{p}}
-
-\subsection{Variabili Decisionali}
-
-\subsubsection{D}
-D è la variabile intera positiva che indica la dimensione del texture Atlas
-
-\subsubsection{X e Y}
-\Xi{} e \Yi{} sono le variabili intere non negative che definiscono la posizione dell'immagine i all'interno del texture atlas.
-
-\subsubsection{W e H}
-\Wi{} e \Hi{} sono le variabili intere positive che indicano rispettivamente la larghezza e l'altezza finali occupate dall'immagine i.
-
-
-\subsubsection{BeforeX e BeforeY}
-
-{\beforeXij} è la variabile binaria che indica se, sull'asse delle ascisse, l'immagine i finisce prima che l'immagine j inizi 
-%(in caso di verità: true)
-. Se sia \beforeXij{} che beforeX\textsubscript{j,i} sono a 1  allora le proiezioni sulle ascisse delle texture i e j si sovrappongono. \\
-{\beforeYij} è lo stesso tipo di variabile, ma per l'asse delle ordinate.
-
-\iffalse
-/*
-BeforeY
- Questo vincolo esiste sia per l'asse x che per l'asse y e si ripete per ogni coppia ordinata di texture. 
-*/
-\fi
-
-\subsubsection{r}
-
-{\ri} è la variabile binaria che indica se l'immagine i è ruotata di 90\degree\ (\ri{}=1) o non ruotata (\ri{}=0)
-
-\subsubsection{is2}
-\isTp{} variabile binaria che indica se D è uguale a una specifica potenza di 2.
+P è l'insieme delle potenze di 2.
 
 
 
 
-
-
-
-\newcommand{\widthi}{width\textsubscript{i}}
-\newcommand{\heighti}{height\textsubscript{i}}
 
 
 \newcommand{\footBleeding}{L'effetto bleeding si può manifestare nei programmi che sfruttano l'accelerazione hardware. In essi i pixel vengono presi con delle coordinate reali in [0,1] e i pixel subito fuori dall'immagine possono "sporcare" quelli di contorno. Perciò si ricopiano questi ultimi in un bordo di 1 pixel attorno a tutta l'immagine.}
@@ -144,21 +122,67 @@ BeforeY
 
 
 
+
+
+
+\subsection{Variabili Decisionali}
+
+\subsubsection{D}
+D è la variabile intera positiva che indica la dimensione del texture Atlas.
+
+\subsubsection{X e Y}
+\Xi{} e \Yi{} sono le variabili intere non negative che definiscono la posizione dell'immagine i all'interno del texture atlas.
+% Xi può avere valori in 0..D-Wi
+
+\subsubsection{W e H}
+\Wi{} e \Hi{} sono le variabili intere positive che indicano rispettivamente la larghezza e l'altezza finali occupate dall'immagine i.
+
+
+\subsubsection{BeforeX e BeforeY}
+
+
+% @TODO
+\hbox{\pdfliteral{0 0 1 rg}\vrule height1cm width8cm depth0cm\pdfliteral{0 g}}
+
+{\beforeXij} è la variabile binaria che indica se, sull'asse delle ascisse, l'immagine i finisce prima che l'immagine j inizi 
+%(in caso di verità: true)
+. Se sia \beforeXij{} che beforeX\textsubscript{j,i} sono a 1  allora le proiezioni sulle ascisse delle texture i e j si sovrappongono almeno in parte. \\
+Quest vincolo si ripete per ogni coppia ordinata di texture diverse.
+%
+%TODO inserire esempi con vari (i,j) : img
+
+{\beforeYij} è la stessa variabile, ma per l'asse delle ordinate.
+
+
+\subsubsection{r}
+
+{\ri} è la variabile binaria che indica se l'immagine i è ruotata di 90\degree\ (ovvero \ri{} vale 1).
+
+\subsubsection{is2}
+\isTp{} è la variabile binaria che indica se D è uguale alla p-esima potenza di 2 dell'insieme P.
+
+
+
+
+
+
+
+
+
 \subsection{Parametri}
 
 \subsubsection{width e height}
 
-\widthi{} e \heighti{} sono i parametri naturali che indicano le dimensioni originali delle texture.
+\widthi{} e \heighti{} sono i parametri positivi che indicano le dimensioni originali delle texture.
 
 \subsubsection{bigM}
-bigM è un parametro naturale grande a piacere, di default a 100’000’000. Indica l'infinito.
+bigM è un parametro positivo grande a piacere, di default a 100’000’000. %Indica l'infinito.
 
 \subsubsection{useNoBleeding}
-useNoBleeding è un parametro binario, di default a 0, che indica se tenere conto dell'effetto bleeding\footnote{\footBleeding} nelle texture atlas. 
+useNoBleeding è un parametro binario, di default a 0, che indica se tenere conto dell'effetto bleeding\footnote{\footBleeding} nel texture atlas. 
 
 \subsubsection{allowRotation}
 allowRotation è un parametro binario, di default a 0, che indica se permettere che le immagini vengano posizionate ruotate\footnote{\footRotation} di 90\degree.%.rotazioni alle texture (ovvero se scambiare w e h).
-
 
 
 \subsubsection{usePowerOfTwo}
@@ -166,6 +190,11 @@ usePowerOfTwo è un parametro binario, di default a 0, che indica se limitare i 
 
 \subsubsection{powersOf2}
 powersOf2 : set di potenze di 2. Serve perché altrimenti servirebbe un vincolo non lineare su D per limitarne i valori alle sole potenze di 2. \\
+
+\subsubsection{powersOf2}
+\powersOfTp{} è la p-esima potenza di 2 dell'insieme P. 
+
+ % set di potenze di 2. Serve perché altrimenti servirebbe un vincolo non lineare su D per limitarne i valori alle sole potenze di 2. \\
 
 
 
@@ -181,7 +210,11 @@ powersOf2 : set di potenze di 2. Serve perché altrimenti servirebbe un vincolo 
 
 
 \subsection{funzione obiettivo}
-minimizzaLato min D è la funzione obiettivo, dove si cerca di minimizzare D.
+\begin{math}
+ minimize D
+\end{math}
+
+minimizzaLato è la funzione obiettivo, dove si cerca di minimizzare D.
 
 
 

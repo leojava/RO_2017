@@ -1,0 +1,198 @@
+\ProvidesPackage{mystyle}
+
+
+\usepackage[a4paper]{geometry}	%page margins
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{color}
+\usepackage{lastpage}
+\usepackage{titling}
+\usepackage{amssymb}
+% \usepackage{amsmath}
+\usepackage[utf8]{inputenc}
+%\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{cmap}
+
+\usepackage{gensymb}
+
+\usepackage{color}
+\usepackage{hyperref}
+
+\usepackage{listings}
+
+
+\usepackage{mathtools}
+
+
+
+
+\hypersetup{
+	colorlinks=true,
+	linktoc=true,
+	linkcolor=black,
+}
+%linktocpage=true
+	%hidelinks=true
+	%citecolor=black
+	%filecolor=black
+	%urlcolor=black
+
+
+
+
+
+
+
+
+
+
+
+
+%% 
+%% AMPL definition (c) 2007 Mirko Maischberger 
+%% 
+\lstdefinelanguage{AMPL}{
+alsoletter={.},% 
+morekeywords={
+\lstset{frame=tb,
+  language=AMPL,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\bfseries,
+  commentstyle=\textit,
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+Current,IN,INOUT,Infinity,Initial,LOCAL,OUT,all,binary,% 
+by,check,complements,contains,default,dimen,div,else,environ,exists,% 
+forall,if,in,integer,less,logical,max,min,option,setof,shell_exitcode,% 
+slve_exitcode,solve_message,solve_result,solve_result_num,suffix,sum,% 
+symbolic,table,then,union,until,while,within,from,to,obj,% 
+cross,diff,symdiff,inter,% 
+and,not,or,prod,product},%keywords 
+%
+morekeywords=[2]{abs,acos,acosh,alias,asin,asinh,atan,atan2,atanh,ceil,% 
+ctime,cos,exp,floor,log,log10,max,min,precision,round,sin,sinh,sqrt,tan,% 
+tanh,time,trunc,% 
+Beta,Cauchy,Exponential,Gamma,Irand224,Normal,Normal101,Poisson,% 
+Uniform,Uniform01,% 
+num,num0,ichar,char,length,substr,sprintf,match,sub,gsub,% 
+card,next,nextw,prev,prevw,first,last,member,ord,ord0,arity,indexarity,% 
+interval,integer,ordered,circular,coeff,cover},%functions 
+morekeywords=[3]{set,param,var,arc,minimize,maximize,subject to,% 
+node,subjto,s.t.},%declarations 
+%
+morekeywords=[4]{call,cd,check,close,commands,data,delete,display,drop,end,% 
+environ,exit,expand,fix,include,let,load,model,objective,option,print,% 
+printf,problem,purge,quit,read,read table,redeclare,reload,remove,reset,% 
+restore,shell,show,solexpand,solution,solve,update,unfix,unload,write,% 
+write table,xref},%commands 
+sensitive=true,% 
+%
+morecomment=[s]{/}{/},% 
+morecomment=[l]\#,% 
+morestring=[d]",% 
+morestring=[d]'% 
+}[keywords,comments,strings]% 
+
+
+
+
+
+
+
+
+
+
+
+\lstset{frame=tb,
+  language=AMPL,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\bfseries,
+  commentstyle=\textit,
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+\iffalse
+
+
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+\fi
+%basicstyle={Ubuntu mono}
+	%basicstyle=\ttfamily,
+
+
+
+
+
+
+\pagestyle{fancy}
+\fancyhead{}
+\fancyfoot{}
+%\fancyfoot[R]{\thepage}
+
+
+\fancyhead[L]{\thetitle}
+\fancyhead[R]{\theauthor\ [\matricola]}
+\fancyfoot[R]{Pagina \thepage\ di \pageref{LastPage}}
+
+
+
+
+
+
+\graphicspath{ {images/} }
+
+
+
+\newcommand{\RealSet}{\mathbb{R}}
+\newcommand{\BinSet}{\{0,1\}}
+\newcommand{\NaturalSet}{\mathbb{N}}
+\newcommand{\IntegerSet}{\mathbb{Z}}
+ 
+
+
+\newcommand{\matNum}{1097942}
+\newcommand{\matricola}{Mat: \matNum}
+
+
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+
+
+\iffalse
+
+\def\Square[#1,#2]{%
+\immediate\write18{\unexpanded{latex "\def\Side{#1}\def\Color{#2}\input{dummy}"}}%
+\immediate\write18{dvips dummy}%
+\immediate\write18{ps2pdf dummy.ps dummy-#2.pdf}%
+\includegraphics{dummy-#2}%
+}
+\fi
+
+% \hbox{\pdfliteral{0 0 1 rg}\vrule height1cm width1cm depth0cm\pdfliteral{0 g}}

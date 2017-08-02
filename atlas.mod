@@ -1,4 +1,6 @@
 
+# atlas.mod
+
 ##///MOD
 
 set I; #ordered; insieme delle immagini

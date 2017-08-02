@@ -1,26 +1,9 @@
 
 \documentclass[11pt]{article}
 
-\usepackage[a4paper]{geometry}	%page margins
-\usepackage{graphicx}
-\usepackage{fancyhdr}
-\usepackage{color}
-\usepackage{lastpage}
-\usepackage{titling}
-\usepackage{amssymb}
-\usepackage{amsmath}
-\usepackage[utf8]{inputenc}
-%\usepackage[utf8x]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{graphicx}
-\usepackage{cmap}
 
-\usepackage{gensymb}
+\usepackage{mystyle}
 
-\usepackage{color}
-\usepackage{hyperref}
-
-\usepackage{listings}
 
 
 
@@ -29,53 +12,10 @@
 \title{Relazione RO per l'A.A. 2016/2017}
 \author{Leonardo Brutesco}
 
-\graphicspath{ {images/} }
-
-\hypersetup{
-	colorlinks=true,
-	linktoc=true,
-	linkcolor=blue,
-	linktocpage=true
-}
-	%hidelinks=true
-	%citecolor=black
-	%filecolor=black
-	%urlcolor=black
-\lstset{
-	basicstyle={Ubuntu mono}
-	columns=fullflexible,
-	frame=single,
-	breaklines=true,
-	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
-}
-	%basicstyle=\ttfamily,
-
-
-\newcommand{\RealSet}{\mathbb{R}}
-\newcommand{\BinSet}{\{0,1\}}
-\newcommand{\NaturalSet}{\mathbb{N}}
-\newcommand{\IntegerSet}{\mathbb{Z}}
- 
-
-
-\newcommand{\matNum}{1097942}
-\newcommand{\matricola}{Mat: \matNum}
 
 
 
-\renewcommand{\headrulewidth}{0.4pt}
-\renewcommand{\footrulewidth}{0.4pt}
 
-
-\pagestyle{fancy}
-\fancyhead{}
-\fancyfoot{}
-%\fancyfoot[R]{\thepage}
-
-
-\fancyhead[L]{\thetitle}
-\fancyhead[R]{\theauthor\ [\matricola]}
-\fancyfoot[R]{Pagina \thepage\ di \pageref{LastPage}}
 
 \begin{document}
 
@@ -91,17 +31,8 @@
 
 \input{05_OsservazioniEExtra.tex}
 
-\iffalse
-  % risultati
-	\section{Risultati del problema}
-	\newpage
-
-	  %commenti
-	\section{Osservazioni}
-	\newpage
-\fi
 	
-	\appendix
+%	\appendix
 %	\section{appendice?}
 
 % \listoffigures
