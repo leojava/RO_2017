@@ -20,6 +20,10 @@
 \newcommand{\beforeYij}{beforeY\textsubscript{i,j}}
 \newcommand{\ri}{r\textsubscript{i}}
 
+
+\renewcommand{\Xj}{X\textsubscript{j}}
+\renewcommand{\Wj}{W\textsubscript{j}}
+
 \newcommand{\isTp}{is2\textsubscript{p}}
 
 
@@ -31,31 +35,23 @@
 
 \begin{align*}	% l'asterisco toglie il numero alle righe (: equazioni)
 %
-%\newcommand{\eqn}[1]{\eqname{( #1 )}}
+%\newcommand{\eqnn}[2]{\label{ #1 } \eqname{ #2 }}
 %
 minimize \ \ D       \ \ \ \ \   &   & \eqname{(minimizzaLato)} \\	% & per allineare
 %
 0 \leq X_i           \ \ \ \ \   & \fori{} \\
-X_i +W_i \leq D      \ \ \ \ \   & \fori{} & \eqname{(minimaX)} \\
+X_i +W_i \leq D      \ \ \ \ \   & \fori{} & \eqname{(minimaX)} \\ %\hyperref[label]{text} \\
 0 \leq Y_i           \ \ \ \ \   & \fori{} \\
 Y_i +H_i \leq D      \ \ \ \ \   & \fori{} & \eqname{(minimaY)} \\
 \\
 %
 %
-%Cx_{i,j} = X_i - (X_j + W_j)       \ \ \ \ \   &\forij{} \\
-%Cy_{i,j} = Y_i - (Y_j + H_j)       \ \ \ \ \   &\forij{} \\ \\
+X_i - (X_j + W_j) \leq (\text{bigM}+1) *beforeX_{i,j} -1           \ \ \ \ \   &\forij{} &\eqname{(beforeXU)} \\
+X_i - (X_j + W_j) \geq 0 + \text{bigM}*(1-beforeX_{i,j})       \ \ \ \ \   &\forij{} &\eqname{(beforeXL)} \\ \\
 %
 %
-%Cx_{i,j} \leq M *befX_{i,j} -1           \ \ \ \ \   &\forall{ i \in I, j \in J: i \neq j} \\
-%Cx_{i,j} \geq 0 + M*(1-befX_{i,j})       \ \ \ \ \   &\forall{ i \in I, j \in J: i \neq j} \\ \\
-X_i - (X_j + W_j) \leq M *befX_{i,j} -1           \ \ \ \ \   &\forij{} &\eqname{(beforeXU)} \\
-X_i - (X_j + W_j) \geq 0 + M*(1-befX_{i,j})       \ \ \ \ \   &\forij{} &\eqname{(beforeXL)} \\ \\
-%
-%
-%Cy_{i,j} \leq M *befY_{i,j} -1           \ \ \ \ \   &\forall{ i \in I, j \in J: i \neq j} \\
-%Cy_{i,j} \geq 0 + M*(1-befY_{i,j})       \ \ \ \ \   &\forall{ i \in I, j \in J: i \neq j} \\ \\
-Y_i - (Y_j + H_j) \leq M *befY_{i,j} -1           \ \ \ \ \   &\forij{} &\eqname{(beforeYU)} \\
-Y_i - (Y_j + H_j) \geq 0 + M*(1-befY_{i,j})       \ \ \ \ \   &\forij{} &\eqname{(beforeYL)} \\ \\
+Y_i - (Y_j + H_j) \leq (\text{bigM}+1)*beforeY_{i,j} -1           \ \ \ \ \   &\forij{} &\eqname{(beforeYU)} \\
+Y_i - (Y_j + H_j) \geq 0 + \text{bigM}*(1-beforeY_{i,j})       \ \ \ \ \   &\forij{} &\eqname{(beforeYL)} \\ \\
 %
 %
 (1-beforeX_{i,j})+(1-beforeX_{j,i})+ \ \ \ \ & \\
@@ -69,14 +65,21 @@ W_i = (\text{\widthi}*(1-r_i) + \text{\heighti}*r_i)+ \ \ \ \ & &\\
 %
 H_i = (\text{\heighti}*(1-r_i) + \text{\widthi}*r_i)+ \ \ \ \ & &\\
 (2*\text{useNoBleeding}) \ \ \ \ & \fori{} &\eqname{(altezza)} \\
-%\ \ \ \ &    &\eqname{()} \\
-%s.t. rotazione{i in I}: r[i]<=allowRotations; # no rotation => fized rotation
-%
-%s.t. larghezza{i in I}: W[i] = (width[i]*(1-r[i])+height[i]*r[i])+(2*useNoBleeding);
-%s.t. altezza{i in I}:   H[i] = (height[i]*(1-r[i])+width[i]*r[i])+(2*useNoBleeding);
 %
 %
 \\
+D-\text{powersOf2\textsubscript{p}} \leq \text{bigM}*(1-is2_p)       \ \ \ \ \   & \forij{} & \eqname{(powersOf2U)} \\
+D-\text{powersOf2\textsubscript{p}} \geq -\text{bigM}*(1-is2_p)       \ \ \ \ \   & \forij{} & \eqname{(powersOf2L)} \\
+\sum_{p \in P} is2_p \geq \text{usePowerOfTwo}       \ \ \ \ \   & & \eqname{(TwoPower)} \\
+\\
+%s.t. powersOf2U{p in P}:  D-powersOf2[p]<= bigM*(1-is2[p]);
+%s.t. powersOf2L{p in P}:  D-powersOf2[p]>= -bigM*(1-is2[p]);
+%s.t. TwoPower:  sum{p in P} is2[p]>=usePowerOfTwo;
+%
+%
+%
+%
+%
 D \in \IntegerSet \ \ \ \ & & \\
 X_i, Y_i, W_i, H_i \in \IntegerSet      \ \ \ \ & \fori{} \\
 beforeX_{i,j}, beforeY_{i,j} \in \BinSet    \ \ \ \ & \forall{i \in I,j \in I} \\
@@ -85,7 +88,10 @@ r_i \in \BinSet \ \ \ \ & \fori{} \\
 %
 is2_p \in \BinSet \ \ \ \ & \forall{p \in P} \\
 %
+%
+%
  \end{align*}
+NB: i parametri sono scritti in testo normale, mentre le variabili e i nomi dei vincoli e delle funzione obiettivo sono scritti in corsivo.
 
 
 
@@ -115,15 +121,18 @@ P è l'insieme delle potenze di 2.
 
 
 
-
 \newcommand{\footBleeding}{L'effetto bleeding si può manifestare nei programmi che sfruttano l'accelerazione hardware. In essi i pixel vengono presi con delle coordinate reali in [0,1] e i pixel subito fuori dall'immagine possono "sporcare" quelli di contorno. Perciò si ricopiano questi ultimi in un bordo di 1 pixel attorno a tutta l'immagine.}
-\newcommand{\footRotation}{Spiegare differenza opengl et sim. Verso solo sw.}
-\newcommand{\footTwoPowers}{Alcune librerie spesso esigono immagini quadrate il cui lato dev'essere una potenze di 2.}
+\newcommand{\footRotation}{Alcuni programmi (soprattutto quelli che sfruttano l'accelerazione hardware) possono renderizzare le texture in modo giusto ache se sull'immagine originaria sono ruotate, mentre altri potrebbero avere problemi.}
+\newcommand{\footTwoPowers}{Alcune librerie spesso esigono immagini quadrate il cui lato dev'essere una potenza di 2.}
+
+\newcommand{\footFreedom}{L'utente in verità ha la libertà di usare queste variabili per mettere valori a piacere, non necessariamente potenze di 2.}
+
+\newcommand{\footIsTSum}{Essendo variabili di uguaglianza su una stessa variabile D, questa somma può essere al massimo 1.}
 
 
 
 
-
+%% VARIABILI
 
 \subsection{Variabili Decisionali}
 
@@ -142,16 +151,19 @@ D è la variabile intera positiva che indica la dimensione del texture Atlas.
 
 
 % @TODO
-\hbox{\pdfliteral{0 0 1 rg}\vrule height1cm width8cm depth0cm\pdfliteral{0 g}}
+%\hbox{\pdfliteral{0 0 1 rg}\vrule height1cm width8cm depth0cm\pdfliteral{0 g}}
 
-{\beforeXij} è la variabile binaria che indica se, sull'asse delle ascisse, l'immagine i finisce prima che l'immagine j inizi 
-%(in caso di verità: true)
-. Se sia \beforeXij{} che beforeX\textsubscript{j,i} sono a 1  allora le proiezioni sulle ascisse delle texture i e j si sovrappongono almeno in parte. \\
-Quest vincolo si ripete per ogni coppia ordinata di texture diverse.
-%
-%TODO inserire esempi con vari (i,j) : img
-
-{\beforeYij} è la stessa variabile, ma per l'asse delle ordinate.
+\beforeXij{} è la variabile binaria che indica se, sull'asse delle ascisse, l'immagine j finisce prima che l'immagine i inizi. Se sia \beforeXij{} che beforeX\textsubscript{j,i} sono a 0 allora le proiezioni sulle ascisse delle texture i e j si sovrappongono almeno in parte. \\
+Questo vincolo si ripete per ogni coppia ordinata di texture diverse. \\
+Per ogni i,j , i possibili valori delle coppie (\beforeXij, beforeX\textsubscript{j,i}) possono essere:
+\begin{itemize}
+	\itemsep0em
+	\item (1,0) se j finisce prima di i
+	\item (0,0) se j non finisce prima di i e i non finisce prima di j (quindi c'è sovrapposizione sulle ascisse)
+	\item (0,1) se i finisce prima di j
+	\item (1,1) è impossibile (poiché dovrebbe essere in contemporanea che j finisca prima di i e i finisca prima di j).
+\end{itemize}
+\beforeYij{} è la stessa variabile, ma per l'asse delle ordinate.
 
 
 \subsubsection{r}
@@ -167,13 +179,13 @@ Quest vincolo si ripete per ogni coppia ordinata di texture diverse.
 
 
 
-
+%% PARAMETRI
 
 \subsection{Parametri}
 
 \subsubsection{width e height}
 
-\widthi{} e \heighti{} sono i parametri positivi che indicano le dimensioni originali delle texture.
+\widthi{} e \heighti{} sono i parametri interi positivi che indicano rispettivamente la larghezza e l'altezza originali di ogni immagine i.
 
 \subsubsection{bigM}
 bigM è un parametro positivo grande a piacere, di default a 100’000’000. %Indica l'infinito.
@@ -188,11 +200,11 @@ allowRotation è un parametro binario, di default a 0, che indica se permettere 
 \subsubsection{usePowerOfTwo}
 usePowerOfTwo è un parametro binario, di default a 0, che indica se limitare i possibili valori di D alle sole potenze di 2\footnote{\footTwoPowers}.
 
-\subsubsection{powersOf2}
-powersOf2 : set di potenze di 2. Serve perché altrimenti servirebbe un vincolo non lineare su D per limitarne i valori alle sole potenze di 2. \\
+%\subsubsection{powersOf2}
+%powersOf2 : set di potenze di 2. Serve perché altrimenti servirebbe un vincolo non lineare su D per limitarne i valori alle sole potenze di 2. \\
 
 \subsubsection{powersOf2}
-\powersOfTp{} è la p-esima potenza di 2 dell'insieme P. 
+\powersOfTp{} è la p-esima potenza di 2 dell'insieme P\footnote{\footFreedom}.
 
  % set di potenze di 2. Serve perché altrimenti servirebbe un vincolo non lineare su D per limitarne i valori alle sole potenze di 2. \\
 
@@ -201,20 +213,22 @@ powersOf2 : set di potenze di 2. Serve perché altrimenti servirebbe un vincolo 
 
 
 
+\newpage
 
 
 
 
-
-
+%% F.OBIETTIVO
 
 
 \subsection{funzione obiettivo}
+\iffalse
 \begin{math}
  minimize D
 \end{math}
+\fi
 
-minimizzaLato è la funzione obiettivo, dove si cerca di minimizzare D.
+minimizzaLato è la funzione obiettivo, la quale cerca di minimizzare D.
 
 
 
@@ -222,35 +236,43 @@ minimizzaLato è la funzione obiettivo, dove si cerca di minimizzare D.
 \subsection{vincoli}
 
 \subsubsection{minimaX e minimaY}
-minimaX si assicura che per ogni immagine, D la possa contenere sulle ascisse. \\
+%\label{label}
+%\hyperref[eq:minimaX]{minimaX}
+minimaX si assicura che, per ogni immagine i, D la possa contenere sulle ascisse. \\
 minimaY è lo stesso vincolo sulle ordinate.
 
+
+
+
+% @TODO
+% \hbox{\pdfliteral{0 0 1 rg}\vrule height1cm width8cm depth0cm\pdfliteral{0 g}}
+
+\newcommand{\Cij}{C\textsubscript{i,j}}
+
 \subsubsection{beforeXU, beforeXL e beforeYU, beforeYL}
-beforeXU e beforeXL sono i vincoli che si assicurano che beforeX (i,j) abbia il corretto valore. Essi pongono un limite superiore e un limite inferiore all'espressione xi-xj-wj (=ci,j) e risultano in beforeX i,j=1 se ci,j appartiene a [0,bigM], beforeX i,j=0 se ci,j appartiene a [-bigM, -1].
-differenza tra l'inizio dell'immagine i e  la fine dell'immagine j.
-
-
-
-
-
-
+beforeXU e beforeXL sono i vincoli che si assicurano che \beforeXij{} abbia il corretto valore rispetto alla differenza tra \Xi{} e la somma di \Xj{} e \Wj{} (ovvero la distanza tra la posizione del primo pixel occupato da i e la posizione dell'ultimo pixel occupato da j). \\
+Essi pongono un limite superiore e uno inferiore all'espressione \Xi{}-(\Xj{}+\Wj{}) e, operando in coppia, forzano \beforeXij{} a essere:
+\begin{itemize}
+	\itemsep0em
+	\item 1, se $\Xi{}-(\Xj{}+\Wi{}) \in [0;bigM]$
+	\item 0, se $\Xi{}-(\Xj{}+\Wi{}) \in [-bigM;-1]$
+\end{itemize}
+% differenza tra l'inizio dell'immagine i e  la fine dell'immagine j.
+%Essi pongono un limite superiore e uno inferiore all'espressione \Xi-(\Xj+\Wi) ( d'ora in poi indicata con \Cij) e risultano in beforeX i,j=1 se ci,j appartiene a [0,bigM], beforeX i,j=0 se ci,j appartiene a [-bigM, -1].
+%differenza tra l'inizio dell'immagine i e  la fine dell'immagine j.
+\iffalse
 /*
-
-
 Cx variabile d'aiuto per befX; dicono quanto spazio c'è a “sinistra” tra l'inizio di i e la fine di j
 * >= 0 intersezione non possibile, 
 * <0 intersezione possibile
 Cy simile per befY
 */
-
-
-
-
-beforeYU e beforeYL sono i corrispettivi vincoli per la variabile beforeY.
+\fi
+beforeYU e beforeYL sono i corrispettivi vincoli per la variabile \beforeYij{}.
 
 
 \subsubsection{noIntersezioni}
-noIntersezioni si assicura che non ci siano intersezioni, ovvero sovrapposizioni sia sulle proiezioni sulle ascisse che sulle ordinate. Esso limita la somma di beforeX e beforeY per ogni coppia non ordinata di immagini (i,j) a 3, ovvero ci può essere al massimo una sovrapposizione su un asse tra ascisse e ma non su entrambe (ovvero un'intersezione).
+noIntersezioni si assicura che non ci siano intersezioni, ovvero sovrapposizioni sia sulle proiezioni sulle ascisse che sulle ordinate. Esso limita inferiormente la somma di \beforeXij{} e \beforeYij{} per ogni coppia non ordinata di immagini (i,j) a 1, ovvero ci può essere al massimo una sovrapposizione su un asse tra ascisse e ordinate ma non su entrambe (cioè un'intersezione).
 
 
 
@@ -262,15 +284,21 @@ rotazione si assicura che le immagini possano ruotare solo se il relativo parame
 
 
 \subsubsection{larghezza e altezza}
-larghezza si assicura di tener conto del bleeding e della possibilità che le immagini possano essere ruotate
-altezza è un vincolo simile per l'altezza. \\
+larghezza imposta la larghezza finale occupata dall'immagine i. Si assicura di tener conto del bleeding e della possibilità che le immagini possano essere ruotate. \\
+altezza è un vincolo simile per l'altezza.
 
 
 \subsubsection{powersOf2U e powersOf2L}
-pU e pL sono vincoli che definiscono upper e lower bound per D
+powersOf2U e powersOf2L sono vincoli che definiscono upper e lower bound per D. \\
+Il primo si assicura che, in caso D sia maggiore di \powersOfTp{}, \isTp{} sia settato a 0. \\
+Il secondo fa la stessa cosa in caso D sia minore di \powersOfTp. 
 
 \subsubsection{TwoPower}
-TwoPower si assicura che, in caso usePowerOfTwo sia impostato a 1, D sia una potenza di 2 tra quelle presenti in powersOf2 
+TwoPower si assicura che, in caso usePowerOfTwo sia impostato a 1, D sia una potenza di 2 tra quelle presenti in powersOf2. \\
+In caso il parametro sia settato il vincolo causa la somma delle variabili is2 a essere almeno 1\footnote{\footIsTSum}.
+Quindi i vincoli powersOf2U e powersOf2L verranno obbligati a portare una variabile \isTp{} a 1 costringendo la differenza tra D e la rispettiva \powersOfTp{} a 0, pena l'infattibilità. \\
+Se invece il parametro è a 0, i vincoli powersOf2U e powersOf2L non hanno influenza.
 
 
 
+\newpage

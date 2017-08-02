@@ -26,6 +26,9 @@
 \usepackage{mathtools}
 
 
+%per listings
+\usepackage{courier}
+
 
 
 \hypersetup{
@@ -128,7 +131,16 @@ morestring=[d]'%
   stringstyle=\color{mauve},
   breaklines=true,
   breakatwhitespace=true,
-  tabsize=3
+  tabsize=2,
+  %
+  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+  postbreak=\mbox{\textcolor{gray}{$\hookrightarrow$}\space},
+  columns=fullflexible,
+  frame=single,
+  numbers=left,
+  numbersep=10pt,
+  stepnumber=1,
+  basicstyle={\fontsize{9}{10}\ttfamily}
 }
 
 \iffalse

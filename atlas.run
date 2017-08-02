@@ -2,49 +2,36 @@
 # atlas.run
 
 ##\\\RUN
+
 reset;
-
-
-
 param num := 6;
 param dataFile symbolic := '' & sprintf('atlas_0%d.dat', num);
 param solutionsFile symbolic := '' & sprintf('soluz_0%d.txt', num);
-
 model atlas.mod;
-data (dataFile);	#atlas_02.dat;
-
+data (dataFile);
 option solver cplex;
 #option Cautions 0;
 #option presolve 0;
-
 solve;
 
 display D;
 
-
-/*
-printf "beforeX, beforeY:\n  ";
-for{i in I}{
-	printf "| %c ", i;
-}
+/* printf "beforeX, beforeY:\n  ";
+for{i in I}	printf "| %c ", i;
 printf "\n";
 for{i in I}{
 	printf "%c ", i;
-	for{j in I}{
-		printf "|%d %d", beforeX[i,j], beforeY[i,j];
-	}
+	for{j in I}	printf "|%d %d", beforeX[i,j], beforeY[i,j];
 	printf "\n";
-}/**/
-
+}*/
 printf "" > (solutionsFile);	#serve per eliminare il vecchio contenuto
 printf "%d,%d\n",D,useNoBleeding >> (solutionsFile);
 for{i in I}{
+	printf '''%s'',%d,%d,%d,%d,%d\n',i,X[i],Y[i],W[i],H[i],r[i];
 	printf '%d,%d,%d,%d,%d\n',X[i],Y[i],W[i],H[i],r[i] >> (solutionsFile);
 }
 
-/*
-cd ROproj;
-include atlas.run;
-*/
+/* cd ROproj;
+include atlas.run; */
 
 ##///RUN
