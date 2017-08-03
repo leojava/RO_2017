@@ -44,7 +44,7 @@
 
 Il problema trattato è quello delle texture atlas, ovvero immagini di dimensioni spesso notevoli utilizzate come raccoglitori di altre immagini, utili per accelerare l’accesso (soprattutto da parte della GPU) alle texture utilizzate da parte dei programmi. \\
 Si vuole trovare la minima lunghezza D tale che un’immagine quadrata di dimensioni DxD contenga tutte le texture comprese in un insieme dato. \\
-Il vincolo principale del problema è che D deve poter contenere tutte le immagini, quindi D dev’essere almeno uguale alla posizione+dimensione (in ascissa e ordinata) di ogni immagine. \\
+Il vincolo principale del problema è che D deve poter contenere tutte le immagini, quindi D dev’essere almeno uguale alla somma di posizione e dimensione di ogni immagine (in ascissa e ordinata). \\
 Il secondo vincolo principale comporta invece la non sovrapposizione di due texture. Questo vincolo è presente per ogni coppia di immagini diverse dell’insieme. \\
 \ \\
 Altri vincoli secondari riguardano tre opzioni del modello, ovvero la possibilità di permettere rotazioni delle texture, il tener conto di un piccolo bordo per ogni immagine e limitare i valori assegnabili a D alle sole potenze di 2.

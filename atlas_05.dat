@@ -1,32 +1,20 @@
+
 ##\\\DAT
 
 set I:= a b c d e f g h;
-
-param width:=	#chiave valore
- a 16
- b 32
- c 8
- d 5
- e 32
- f 168
- g 96
- h 96;
-
-param height:=
- a 32
- b 32
- c 8
- d 15
- e 64
- f 32
- g 128
- h 96;
+param: width height:=	#chiave valore
+ a  16  32
+ b  32  32
+ c   8   8
+ d   5  15
+ e  32  64
+ f 168  32
+ g  96 128
+ h  96  96;
 
 param bigM := 100000000;
-
 param allowRotations = 1;
 param useNoBleeding = 1;
-
 #param usePowerOfTwo = 1;
 set P:=0 1 2 3 4 5 6 7 8 9 10 11 12 13 14;
 param powersOf2:=
