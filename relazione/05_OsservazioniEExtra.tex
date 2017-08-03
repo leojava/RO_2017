@@ -1,25 +1,34 @@
 
 	\section{Osservazioni}
 	
+	Mettendo a confronto i dati delle soluzioni dei problemi, si può notare come l'impostazione del parametro usePowersOf2 riduca anche drasticamente le iterazioni semplici MIP e i nodi branch-and-bound. \\
 
-osservazioni sulla velocità usando solo potenze di 2
-\\
+	\noindent Si può anche notare come l'impostazione del parametro allowRotations possa portare a un migliorameto della funzione obiettivo; \\
 
-e permettendo le rotazioni
+	\noindent Mentre useNoBleeding implica una soluzione possibilmente peggiore poiché, inevitabilmente, viene occupato più spazio sull'immagine.
 
-
-	\newpage
-
-
-\section{Extra}
-
-
-funzionalità aggiuntive
+%osservazioni sulla velocità usando solo potenze di 2
+\ \\
+\ \\
+\ \\
+\ \\
+\ \\
+%e permettendo le rotazioni aumenta la complessità
 
 
-\subsection{soluz.txt}
-lo script .run crea un file di nome soluz.txt che verrà poi usato da makeImg.
+	%\newpage
 
+
+% \section{Extra}
+
+
+\section{funzionalità aggiuntive}
 
 \subsection{makeImg}
-è stato sviluppato un piccolo programma javascript di supporto per la creazione di una immagine apposita che permetta una migliore visualizzazione della soluzione di ogni set di dati.
+È stato sviluppato un piccolo programma javascript di supporto per la creazione di un'immagine dalle informazioni della soluzione. L'immagine così creata dovrebbe permettere una migliore visualizzazione della soluzione di ogni set di dati. 
+
+\subsection{soluz.txt}
+Lo script .run crea un file di nome soluz\_\#\#.txt contenente i dati della soluzioni per disporre in maniera ottimale le texture. \\
+Il contenuto di questo file può essere inserito in makeImg per creare una immagine relativa alla soluzione.
+
+\newpage

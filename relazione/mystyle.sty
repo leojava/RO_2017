@@ -17,7 +17,8 @@
 
 \usepackage{gensymb}
 
-\usepackage{color}
+%\usepackage{color}
+\usepackage{xcolor}
 \usepackage{hyperref}
 
 \usepackage{listings}
@@ -30,6 +31,7 @@
 \usepackage{courier}
 
 \usepackage{multirow}
+\usepackage{float}
 
 
 
@@ -46,7 +48,10 @@
 
 
 
-
+\definecolor{mauve}{HTML}{B784A7}
+\definecolor{gray}{HTML}{D3D3D3}
+%\definecolor{darkgray}{HTML}{A9A9A9}
+\definecolor{darkgray}{HTML}{555555}
 
 
 
@@ -127,7 +132,7 @@ morestring=[d]'%
   columns=flexible,
   basicstyle={\ttfamily},
   numbers=none,
-  numberstyle=\tiny\color{gray},
+  numberstyle=\tiny\color{darkgray},
   keywordstyle=\bfseries,
   commentstyle=\textit,
   stringstyle=\color{mauve},
@@ -136,7 +141,7 @@ morestring=[d]'%
   tabsize=2,
   %
   postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
-  postbreak=\mbox{\textcolor{gray}{$\hookrightarrow$}\space},
+  %postbreak=\mbox{\textcolor{gray}{$\hookrightarrow$}\space},
   columns=fullflexible,
   frame=single,
   numbers=left,

@@ -4,7 +4,7 @@
 ##\\\RUN
 
 reset;
-param num := 1;
+param num := 6;
 param dataFile symbolic := '' & sprintf('atlas_0%d.dat', num);
 param solutionsFile symbolic := '' & sprintf('soluz_0%d.txt', num);
 model atlas.mod;
