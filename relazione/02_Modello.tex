@@ -23,6 +23,8 @@
 
 \newcommand{\Xj}{X\textsubscript{j}}
 \newcommand{\Wj}{W\textsubscript{j}}
+\newcommand{\Yj}{Y\textsubscript{j}}
+\newcommand{\Hj}{H\textsubscript{j}}
 
 \newcommand{\isTp}{is2\textsubscript{p}}
 
@@ -55,8 +57,8 @@ Y_i - (Y_j + H_j) \leq (\text{bigM}+1)*beforeY_{i,j} -1           \ \ \ \ \   &\
 Y_i - (Y_j + H_j) \geq 0 + \text{bigM}*(1-beforeY_{i,j})       \ \ \ \ \   &\forij{} &\eqname{(beforeYL)} \\ \\
 %
 %
-(1-beforeX_{i,j})+(1-beforeX_{j,i})+ \ \ \ \ & \\
-(1-beforeY_{i,j})+(1-beforeY_{j,i}) \leq 3       \ \ \ \ \   & \forij{} & \eqname{(noIntersezioni)} \\ \\
+beforeX_{i,j} +beforeX_{j,i}+ \ \ \ \ & \\
+beforeY_{i,j} +beforeY_{j,i} \geq 1       \ \ \ \ \   & \forij{} & \eqname{(noIntersezioni)} \\ \\
 %
 %
 r_i \leq \text{allowRotations} \ \ \ \ & \fori{} &\eqname{(rotazione)} \\
@@ -83,7 +85,7 @@ D-\text{powersOf2\textsubscript{p}} \geq -\text{bigM}*(1-is2_p)       \ \ \ \ \ 
 %
 D \in \IntegerSet \ \ \ \ & & \\
 X_i, Y_i, W_i, H_i \in \IntegerSet      \ \ \ \ & \fori{} \\
-beforeX_{i,j}, beforeY_{i,j} \in \BinSet    \ \ \ \ & \forall{i \in I,j \in I} \\
+beforeX_{i,j}, beforeY_{i,j} \in \BinSet    \ \ \ \ & \forall{i,j \in I} \\
 %
 r_i \in \BinSet \ \ \ \ & \fori{} \\
 %
@@ -92,7 +94,7 @@ is2_p \in \BinSet \ \ \ \ & \forall{p \in P} \\
 %
 %
  \end{align*}
-NB: i parametri sono scritti in testo normale, mentre le variabili e i nomi dei vincoli e delle funzione obiettivo sono scritti in corsivo.
+NB: i parametri sono scritti in testo normale, mentre le variabili e i nomi dei vincoli e della funzione obiettivo sono scritti in corsivo.
 
 
 
@@ -109,7 +111,8 @@ Il modello è passato per più fasi incrementali:
 
 
 
-
+\newpage
+È stato deciso che i nomi di insiemi, variabili, parametri, funzione obiettivo e vincoli che inizino per minuscola debbano iniziare per minuscola anche se all'inizio della frase.
 
 \subsection{Insiemi}
 \subsubsection{I}
@@ -123,7 +126,7 @@ P è l'insieme delle potenze di 2.
 
 
 \newcommand{\footBleeding}{L'effetto bleeding si può manifestare nei programmi che sfruttano l'accelerazione hardware. In essi i pixel vengono presi con delle coordinate reali in [0,1] e i pixel subito fuori dall'immagine possono "sporcare" quelli di contorno. Perciò si ricopiano questi ultimi in un bordo di 1 pixel attorno a tutta l'immagine.}
-\newcommand{\footRotation}{Alcuni programmi (soprattutto quelli che sfruttano l'accelerazione hardware) possono renderizzare le texture in modo giusto ache se sull'immagine originaria sono ruotate, mentre altri potrebbero avere problemi.}
+\newcommand{\footRotation}{Alcuni programmi (soprattutto quelli che sfruttano l'accelerazione hardware) possono renderizzare le texture in modo giusto anche se sull'immagine originaria sono ruotate, mentre altri potrebbero avere problemi.}
 \newcommand{\footTwoPowers}{Alcune librerie spesso esigono immagini quadrate il cui lato dev'essere una potenza di 2.}
 
 \newcommand{\footFreedom}{L'utente in verità ha la libertà di usare queste variabili per mettere valori a piacere, non necessariamente potenze di 2.}
@@ -156,20 +159,20 @@ D è la variabile intera positiva che indica la dimensione del texture Atlas.
 
 \beforeXij{} è la variabile binaria che indica se, sull'asse delle ascisse, l'immagine j finisce prima che l'immagine i inizi. Se sia \beforeXij{} che beforeX\textsubscript{j,i} sono a 0 allora le proiezioni sulle ascisse delle texture i e j si sovrappongono almeno in parte. \\
 Questo vincolo si ripete per ogni coppia ordinata di texture diverse. \\
-Per ogni i,j , i possibili valori delle coppie (\beforeXij, beforeX\textsubscript{j,i}) possono essere:
+Per ogni i e j, i possibili valori delle coppie (\beforeXij, beforeX\textsubscript{j,i}) possono essere:
 \begin{itemize}
 	\itemsep0em
-	\item (1,0) se j finisce prima di i
-	\item (0,0) se j non finisce prima di i e i non finisce prima di j (quindi c'è sovrapposizione sulle ascisse)
-	\item (0,1) se i finisce prima di j
-	\item (1,1) è impossibile (poiché dovrebbe essere in contemporanea che j finisca prima di i e i finisca prima di j).
+	\item (1,0): se j finisce prima di i
+	\item (0,0): se j non finisce prima di i e i non finisce prima di j (quindi c'è sovrapposizione sulle ascisse)
+	\item (0,1): se i finisce prima di j
+	\item (1,1): impossibile (poiché dovrebbe essere in contemporanea che j finisca prima di i e i finisca prima di j).
 \end{itemize}
 \beforeYij{} è la stessa variabile, ma per l'asse delle ordinate.
 
 
 \subsubsection{r}
 
-{\ri} è la variabile binaria che indica se l'immagine i è ruotata di 90\degree\ (ovvero \ri{} vale 1).
+{\ri} è la variabile binaria che indica, in caso sia settata a 1, che l'immagine i è ruotata di 90\degree.
 
 \subsubsection{is2}
 \isTp{} è la variabile binaria che indica se D è uguale alla p-esima potenza di 2 dell'insieme P.
@@ -201,13 +204,9 @@ allowRotation è un parametro binario, di default a 0, che indica se permettere 
 \subsubsection{usePowerOfTwo}
 usePowerOfTwo è un parametro binario, di default a 0, che indica se limitare i possibili valori di D alle sole potenze di 2\footnote{\footTwoPowers}.
 
-%\subsubsection{powersOf2}
-%powersOf2 : set di potenze di 2. Serve perché altrimenti servirebbe un vincolo non lineare su D per limitarne i valori alle sole potenze di 2. \\
-
 \subsubsection{powersOf2}
-\powersOfTp{} è la p-esima potenza di 2 dell'insieme P\footnote{\footFreedom}.
-
- % set di potenze di 2. Serve perché altrimenti servirebbe un vincolo non lineare su D per limitarne i valori alle sole potenze di 2. \\
+\powersOfTp{} è la p-esima potenza di 2 dell'insieme P\footnote{\footFreedom}. \\
+I parametri powersOf2 sono necessari poiché altrimenti servirebbe un vincolo non lineare su D per limitarne i valori alle sole potenze di 2. \\
 
 
 
@@ -222,7 +221,7 @@ usePowerOfTwo è un parametro binario, di default a 0, che indica se limitare i 
 %% F.OBIETTIVO
 
 
-\subsection{funzione obiettivo}
+\subsection{Funzione Obiettivo}
 \iffalse
 \begin{math}
  minimize D
@@ -234,7 +233,7 @@ minimizzaLato è la funzione obiettivo, la quale cerca di minimizzare D.
 
 
 
-\subsection{vincoli}
+\subsection{Vincoli}
 
 \subsubsection{minimaX e minimaY}
 %\label{label}
@@ -245,8 +244,6 @@ minimaY è lo stesso vincolo sulle ordinate.
 
 
 
-% @TODO
-% \hbox{\pdfliteral{0 0 1 rg}\vrule height1cm width8cm depth0cm\pdfliteral{0 g}}
 
 \newcommand{\Cij}{C\textsubscript{i,j}}
 
@@ -255,8 +252,8 @@ beforeXU e beforeXL sono i vincoli che si assicurano che \beforeXij{} abbia il c
 Essi pongono un limite superiore e uno inferiore all'espressione \Xi{}-(\Xj{}+\Wj{}) e, operando in coppia, forzano \beforeXij{} a essere:
 \begin{itemize}
 	\itemsep0em
-	\item 1, se $\Xi{}-(\Xj{}+\Wi{}) \in [0;bigM]$
-	\item 0, se $\Xi{}-(\Xj{}+\Wi{}) \in [-bigM;-1]$
+	\item 1, se $\Xi{}-(\Xj{}+\Wj{}) \in [0;\text{bigM}]$
+	\item 0, se $\Xi{}-(\Xj{}+\Wj{}) \in [-\text{bigM};-1]$
 \end{itemize}
 % differenza tra l'inizio dell'immagine i e  la fine dell'immagine j.
 %Essi pongono un limite superiore e uno inferiore all'espressione \Xi-(\Xj+\Wi) ( d'ora in poi indicata con \Cij) e risultano in beforeX i,j=1 se ci,j appartiene a [0,bigM], beforeX i,j=0 se ci,j appartiene a [-bigM, -1].
@@ -269,16 +266,19 @@ Cx variabile d'aiuto per befX; dicono quanto spazio c'è a “sinistra” tra l'
 Cy simile per befY
 */
 \fi
-beforeYU e beforeYL sono i corrispettivi vincoli per la variabile \beforeYij{}.
+%\hbox{\pdfliteral{0 0 1 rg}\vrule height1cm width8cm depth0cm\pdfliteral{0 g}}s
+beforeYU e beforeYL sono i relativi vincoli per la variabile \beforeYij{} e l'espressione \Yi{}-(\Yj{}+\Hj{}).
 
 
 \subsubsection{noIntersezioni}
-noIntersezioni si assicura che non ci siano intersezioni, ovvero sovrapposizioni sia sulle proiezioni sulle ascisse che sulle ordinate. Esso limita inferiormente la somma di \beforeXij{} e \beforeYij{} per ogni coppia non ordinata di immagini (i,j) a 1, ovvero ci può essere al massimo una sovrapposizione su un asse tra ascisse e ordinate ma non su entrambe (cioè un'intersezione).
+noIntersezioni si assicura che non ci siano intersezioni tra le immagini, ovvero sovrapposizioni sia sulle proiezioni sulle ascisse che sulle ordinate. \\
+Esso limita inferiormente la somma di \beforeXij{} e \beforeYij{} per ogni coppia non ordinata di immagini (i,j) a 1, ovvero ci può essere al massimo una sovrapposizione su un asse tra ascisse e ordinate ma non su entrambe (cioè un'intersezione).
 
-
-
+%\hyphenation{allowRotations}
+\begin{sloppypar}
 \subsubsection{rotazione}
-rotazione si assicura che le immagini possano ruotare solo se il relativo parametro allowRotations è impostato a 1.
+rotazione si assicura che le immagini possano ruotare solo se il relativo parametro \mbox{allowRotations} è impostato a 1.
+\end{sloppypar}
 
 
 
@@ -296,9 +296,9 @@ Il secondo fa la stessa cosa in caso D sia minore di \powersOfTp.
 
 \subsubsection{TwoPower}
 TwoPower si assicura che, in caso usePowerOfTwo sia impostato a 1, D sia una potenza di 2 tra quelle presenti in powersOf2. \\
-In caso il parametro sia settato il vincolo causa la somma delle variabili is2 a essere almeno 1\footnote{\footIsTSum}.
-Quindi i vincoli powersOf2U e powersOf2L verranno obbligati a portare una variabile \isTp{} a 1 costringendo la differenza tra D e la rispettiva \powersOfTp{} a 0, pena l'infattibilità. \\
-Se invece il parametro è a 0, i vincoli powersOf2U e powersOf2L non hanno influenza.
+In caso il parametro sia settato, il vincolo causa la somma delle variabili is2 a essere almeno 1\footnote{\footIsTSum}.
+Quindi i vincoli powersOf2U e powersOf2L verranno obbligati a portare una variabile \isTp{} a 1 costringendo la differenza tra D e la rispettiva \powersOfTp{} a 0, pena l'impossibilità del problema. \\
+Se invece il parametro è impostato a 0, i vincoli powersOf2U e powersOf2L non hanno influenza.
 
 
 

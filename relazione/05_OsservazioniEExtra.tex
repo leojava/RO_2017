@@ -1,17 +1,14 @@
 
 	\section{Osservazioni}
 	
-	Mettendo a confronto i dati delle soluzioni dei problemi, si può notare come l'impostazione del parametro usePowersOf2 riduca anche drasticamente le iterazioni semplici MIP e i nodi branch-and-bound. \\
-
-	\noindent Si può anche notare come l'impostazione del parametro allowRotations possa portare a un migliorameto della funzione obiettivo; \\
-
-	\noindent Mentre useNoBleeding implica una soluzione possibilmente peggiore poiché, inevitabilmente, viene occupato più spazio sull'immagine.
-
+Mettendo a confronto i dati delle soluzioni dei problemi, si possono comparare in maniera critica i risultati e l'esecuzione del modello e ottenere delle osservazioni (alcune ovvie ma comunque degne di nota).\\
+Dai 6 problemi si può notare che:
+\begin{enumerate}
+	\item limitare i valori assegnabili a D riduce di molto la complessità del modello, poiché si devono controllare pochi valori e ciò fa sì che si riduca il numero di MIP simplex iterations e di nodi branch-and-bound durante l'esecuzione; ciò a discapito di una soluzione sicuramente non migliore rispetto a un problema con un set di valori non limitato.
+	\item richiedere un bordo per evitare l'effetto bleeding implica una soluzione probabilmente peggiore poiché, inevitabilmente, viene occupato più spazio
+	\item permettere le rotazioni invece aumenta un po' la complessità del problema ma consente di trovare soluzioni migliori, poiché sono previste più possibilità per i valori delle soluzioni.
+\end{enumerate}
 %osservazioni sulla velocità usando solo potenze di 2
-\ \\
-\ \\
-\ \\
-\ \\
 \ \\
 %e permettendo le rotazioni aumenta la complessità
 
@@ -19,15 +16,13 @@
 	%\newpage
 
 
-% \section{Extra}
 
-
-\section{funzionalità aggiuntive}
+\section{Funzionalità Aggiuntive}
 
 \subsection{makeImg}
-È stato sviluppato un piccolo programma javascript di supporto per la creazione di un'immagine dalle informazioni della soluzione. L'immagine così creata dovrebbe permettere una migliore visualizzazione della soluzione di ogni set di dati. 
+È stato sviluppato un piccolo programma JavaScript di supporto per la creazione di un'immagine dalle informazioni della soluzione. L'immagine così creata permette una migliore comprensione della soluzione di ogni set di dati. 
 
-\subsection{soluz.txt}
+\subsection{soluz\_\#\#.txt}
 Lo script .run crea un file di nome soluz\_\#\#.txt contenente i dati della soluzioni per disporre in maniera ottimale le texture. \\
 Il contenuto di questo file può essere inserito in makeImg per creare una immagine relativa alla soluzione.
 
