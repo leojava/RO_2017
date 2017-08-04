@@ -1,12 +1,12 @@
 
 	\section{Osservazioni}
 	
-Mettendo a confronto i dati delle soluzioni dei problemi, si possono comparare in maniera critica i risultati e l'esecuzione del modello e ottenere delle osservazioni (alcune ovvie ma comunque degne di nota).\\
+Mettendo a confronto i dati delle soluzioni dei problemi, si possono comparare in maniera critica i risultati e l'esecuzione del modello e ottenere delle osservazioni (alcune ovvie, ma comunque degne di nota).\\
 Dai 6 problemi si può notare che:
 \begin{enumerate}
-	\item limitare i valori assegnabili a D riduce di molto la complessità del modello, poiché si devono controllare pochi valori e ciò fa sì che si riduca il numero di MIP simplex iterations e di nodi branch-and-bound durante l'esecuzione; ciò a discapito di una soluzione sicuramente non migliore rispetto a un problema con un set di valori non limitato.
-	\item richiedere un bordo per evitare l'effetto bleeding implica una soluzione probabilmente peggiore poiché, inevitabilmente, viene occupato più spazio
-	\item permettere le rotazioni invece aumenta un po' la complessità del problema ma consente di trovare soluzioni migliori, poiché sono previste più possibilità per i valori delle soluzioni.
+	\item Limitare i valori assegnabili a D riduce di molto la complessità del modello, poiché si devono controllare pochi valori e ciò fa sì che si riduca il numero di MIP simplex iterations e di nodi branch-and-bound durante l'esecuzione; ciò a discapito di una soluzione sicuramente non migliore rispetto a un problema con un set di valori non limitato.
+	\item Richiedere un bordo per evitare l'effetto bleeding implica una soluzione probabilmente peggiore poiché, inevitabilmente, viene occupato più spazio.
+	\item Permettere le rotazioni invece aumenta un po' la complessità del problema ma consente di trovare soluzioni migliori, poiché sono previste più possibilità per i valori delle soluzioni.
 \end{enumerate}
 %osservazioni sulla velocità usando solo potenze di 2
 \ \\
@@ -23,7 +23,7 @@ Dai 6 problemi si può notare che:
 È stato sviluppato un piccolo programma JavaScript di supporto per la creazione di un'immagine dalle informazioni della soluzione. L'immagine così creata permette una migliore comprensione della soluzione di ogni set di dati. 
 
 \subsection{soluz\_\#\#.txt}
-Lo script .run crea un file di nome soluz\_\#\#.txt contenente i dati della soluzioni per disporre in maniera ottimale le texture. \\
-Il contenuto di questo file può essere inserito in makeImg per creare una immagine relativa alla soluzione.
+Lo script .run crea un file di nome soluz\_\#\#.txt contenente i dati della soluzione per disporre in maniera ottimale le texture. \\
+Il contenuto di questo file può essere inserito in makeImg per creare l'immagine relativa alla soluzione.
 
 \newpage
